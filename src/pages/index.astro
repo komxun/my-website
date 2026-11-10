@@ -1,17 +1,571 @@
+
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
+import { getCollection } from "astro:content";
+import Layout from "../layouts/Layout.astro";
+import ContentStrip from "../components/ContentStrip.astro";
+import DroneIcon from "../components/DroneIcon.astro";
+import type { StripItem } from "../components/ContentStrip.astro";
+import { byDateDesc, formatYear, formatDate } from "../lib/format";
+import { youTubeThumbnail, youTubeWatchUrl } from "../lib/media";
 
+/** Featured first, then newest; capped to `limit`. */
+function pick<T extends { data: { featured: boolean; date: Date; order?: number } }>(
+  entries: T[],
+  limit: number
+) {
+  return [...entries]
+    .sort((a, b) => {
+      if (a.data.featured !== b.data.featured) return a.data.featured ? -1 : 1;
+      return byDateDesc(a, b);
+    })
+    .slice(0, limit);
+}
 
+const notDraft = ({ data }: { data: { draft: boolean } }) => !data.draft;
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+const researchItems: StripItem[] = pick(
+  await getCollection("research", notDraft),
+  8
+).map((e) => ({
+  href: `/research/${e.id}/`,
+  title: e.data.title,
+  eyebrow: e.data.area,
+  meta: `${formatYear(e.data.date)} · ${e.data.status}`,
+  thumbnail: e.data.cover?.src,
+  thumbAlt: e.data.cover?.alt,
+}));
+
+const projectItems: StripItem[] = pick(
+  await getCollection("projects", notDraft),
+  8
+).map((e) => ({
+  href: `/projects/${e.id}/`,
+  title: e.data.title,
+  eyebrow: e.data.category,
+  meta: `${formatYear(e.data.date)} · ${e.data.status}`,
+  thumbnail: e.data.cover?.src,
+  thumbAlt: e.data.cover?.alt,
+}));
+
+const softwareItems: StripItem[] = pick(
+  await getCollection("software", notDraft),
+  8
+).map((e) => ({
+  href: `/software/${e.id}/`,
+  title: e.data.title,
+  eyebrow: e.data.language,
+  meta: e.data.stars != null ? `★ ${e.data.stars}` : formatYear(e.data.date),
+}));
+
+const knowledgeItems: StripItem[] = pick(
+  await getCollection("knowledge", notDraft),
+  8
+).map((e) => ({
+  href: `/knowledge/${e.id}/`,
+  title: e.data.title,
+  eyebrow: e.data.category,
+  meta: formatDate(e.data.date),
+  thumbnail: e.data.cover?.src,
+  thumbAlt: e.data.cover?.alt,
+}));
+
+const videoItems: StripItem[] = pick(
+  await getCollection("videos", notDraft),
+  8
+).map((e) => ({
+  href: youTubeWatchUrl(e.data.youtubeId),
+  title: e.data.title,
+  eyebrow: e.data.category,
+  meta: formatDate(e.data.date),
+  thumbnail: youTubeThumbnail(e.data.youtubeId),
+  external: true,
+  isVideo: true,
+}));
 ---
 
-<Layout>
-	<Welcome />
-	<a href="/">Home</a>
-	<a href="/about/">About</a>
-	<a href="/blog/">Blog</a>
-	
+<Layout
+  title="Komsun Tamanakijprasart | Aerospace & Autonomous Systems"
+  description="Explore the research, engineering projects, software and technical knowledge of Komsun Tamanakijprasart."
+>
+
+  <!-- HERO SECTION -->
+  <section class="hero">
+    <div class="container hero-container">
+
+      <div class="hero-content">
+
+        <div class="hero-tag">
+          <span class="status-dot"></span>
+          AEROSPACE ENGINEERING & AUTONOMOUS SYSTEMS
+        </div>
+
+        <h1>
+          Engineering <span>intelligent</span> autonomous systems.
+        </h1>
+
+        <p class="hero-description">
+          I work at the intersection of aerospace engineering,
+          artificial intelligence and robotics, developing
+          intelligent solutions for autonomous aerial systems.
+        </p>
+
+        <div class="hero-specialisms">
+          <span>UAV Autonomy</span>
+          <span>Swarm Intelligence</span>
+          <span>Guidance & Control</span>
+          <span>Robotics</span>
+        </div>
+
+        <div class="hero-actions">
+          <a href="/projects/" class="button button-primary">
+            Explore my work <span aria-hidden="true">→</span>
+          </a>
+
+          <a href="/about/" class="button button-outline">
+            About me
+          </a>
+        </div>
+
+      </div>
+
+      <div class="hero-visual">
+        <div class="visual-grid"></div>
+
+        <div class="visual-content">
+          <div class="visual-label">AUTONOMOUS SYSTEMS</div>
+
+          <div class="visual-symbol">
+            <div class="orbit orbit-one"></div>
+            <div class="orbit orbit-two"></div>
+
+            <!-- Orbiting UAV constellation -->
+            <div class="orbit-ring ring-inner">
+              <span class="uav-node" style="--angle: 30deg"><DroneIcon size={22} /></span>
+              <span class="uav-node" style="--angle: 160deg"><DroneIcon size={22} /></span>
+              <span class="uav-node" style="--angle: 265deg"><DroneIcon size={22} /></span>
+            </div>
+
+            <div class="orbit-ring ring-outer">
+              <span class="uav-node accent" style="--angle: 0deg"><DroneIcon size={20} /></span>
+              <span class="uav-node" style="--angle: 90deg"><DroneIcon size={20} /></span>
+              <span class="uav-node accent" style="--angle: 200deg"><DroneIcon size={20} /></span>
+              <span class="uav-node" style="--angle: 300deg"><DroneIcon size={20} /></span>
+            </div>
+
+            <!-- Lead UAV -->
+            <div class="uav-core"><DroneIcon size={46} /></div>
+          </div>
+
+          <div class="visual-coordinates">
+            GUIDANCE · NAVIGATION · CONTROL
+          </div>
+        </div>
+
+        <div class="visual-corner top-left">01 / SYSTEMS</div>
+        <div class="visual-corner bottom-right">ENGINEERING / 2026</div>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- INTRODUCTION -->
+  <section class="intro section">
+    <div class="container intro-container">
+
+      <div>
+        <p class="section-label">01 / ABOUT</p>
+        <h2>Research meets real-world engineering.</h2>
+      </div>
+
+      <div class="intro-text">
+        <p>
+          My work focuses on intelligent autonomy for unmanned
+          aerial systems, from mathematical modelling and
+          optimisation to autonomous guidance and multi-agent
+          coordination.
+        </p>
+
+        <p>
+          I am particularly interested in bridging theoretical
+          research with practical implementation, developing
+          algorithms that can operate in complex and dynamic
+          environments.
+        </p>
+
+        <a href="/about/" class="text-link">
+          More about me <span aria-hidden="true">→</span>
+        </a>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- RESEARCH -->
+  {researchItems.length > 0 && (
+    <ContentStrip
+      class="research-section"
+      label="02 / RESEARCH"
+      title="Exploring intelligent autonomy."
+      description="Research spanning autonomous navigation, multi-agent systems and intelligent decision-making."
+      viewAllHref="/research/"
+      viewAllLabel="All research"
+      items={researchItems}
+    />
+  )}
+
+  <!-- ENGINEERING PROJECTS -->
+  {projectItems.length > 0 && (
+    <ContentStrip
+      label="03 / ENGINEERING"
+      title="From algorithms to autonomous systems."
+      description="Selected engineering projects, implementations and experimental demonstrations."
+      viewAllHref="/projects/"
+      viewAllLabel="All projects"
+      items={projectItems}
+    />
+  )}
+
+  <!-- SOFTWARE -->
+  {softwareItems.length > 0 && (
+    <ContentStrip
+      label="04 / SOFTWARE"
+      title="Building, testing and shipping code."
+      description="Open-source implementations, algorithms and engineering tools."
+      viewAllHref="/software/"
+      viewAllLabel="All software"
+      items={softwareItems}
+    />
+  )}
+
+  <!-- KNOWLEDGE HUB -->
+  {knowledgeItems.length > 0 && (
+    <ContentStrip
+      class="research-section"
+      label="05 / KNOWLEDGE"
+      title="Understanding the engineering behind autonomy."
+      description="Technical articles, derivations, algorithm explanations and implementation notes."
+      viewAllHref="/knowledge/"
+      viewAllLabel="All articles"
+      items={knowledgeItems}
+    />
+  )}
+
+  <!-- VIDEOS -->
+  {videoItems.length > 0 && (
+    <ContentStrip
+      label="06 / VIDEOS"
+      title="Engineering, explained on video."
+      description="Walkthroughs and explainers on autonomy, control and aerospace engineering."
+      viewAllHref="/videos/"
+      viewAllLabel="All videos"
+      items={videoItems}
+    />
+  )}
+
 </Layout>
+
+
+<style>
+  /* HERO */
+  .hero {
+    min-height: 540px;
+    display: flex;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .hero-container {
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    align-items: center;
+    gap: 60px;
+    padding-block: 56px;
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+  }
+
+  .hero-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    font-weight: 700;
+    color: var(--color-text-muted);
+    margin-bottom: 28px;
+  }
+
+  .status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #22C55E;
+    box-shadow: 0 0 12px #22C55E;
+  }
+
+  .hero h1 span {
+    color: var(--color-accent);
+  }
+
+  .hero-description {
+    max-width: 570px;
+    font-size: 1.05rem;
+    margin-top: 28px;
+  }
+
+  .hero-specialisms {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 28px;
+  }
+
+  .hero-specialisms span {
+    padding: 7px 12px;
+    border: 1px solid var(--color-border);
+    border-radius: 6px;
+    color: var(--color-text-muted);
+    font-size: 0.78rem;
+  }
+
+  .hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    margin-top: 36px;
+  }
+
+  /* HERO VISUAL */
+  .hero-visual {
+    height: 420px;
+    position: relative;
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+    border: 1px solid var(--color-border);
+    border-radius: 16px;
+    background:
+      radial-gradient(
+        circle at center,
+        rgb(37 99 235 / 16%),
+        transparent 65%
+      ),
+      var(--color-surface);
+  }
+
+  .visual-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(
+        rgb(148 163 184 / 8%) 1px,
+        transparent 1px
+      ),
+      linear-gradient(
+        90deg,
+        rgb(148 163 184 / 8%) 1px,
+        transparent 1px
+      );
+    background-size: 35px 35px;
+  }
+
+  .visual-content {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    place-items: center;
+  }
+
+  .visual-label,
+  .visual-coordinates {
+    color: var(--color-text-muted);
+    font-size: 0.65rem;
+    letter-spacing: 0.18em;
+  }
+
+  .visual-symbol {
+    width: 220px;
+    height: 220px;
+    display: grid;
+    place-items: center;
+    position: relative;
+    margin-block: 28px;
+  }
+
+  /* Lead UAV in the centre */
+  .uav-core {
+    position: relative;
+    z-index: 3;
+    display: grid;
+    place-items: center;
+    color: var(--color-accent);
+    filter: drop-shadow(0 0 10px rgb(249 115 22 / 55%));
+    animation: uav-pulse 3.2s ease-in-out infinite;
+  }
+
+  /* Static orbit rings */
+  .orbit {
+    position: absolute;
+    border: 1px solid rgb(37 99 235 / 55%);
+    border-radius: 50%;
+  }
+
+  .orbit-one {
+    width: 160px;
+    height: 160px;
+  }
+
+  .orbit-two {
+    width: 220px;
+    height: 220px;
+    border-style: dashed;
+    border-color: rgb(249 115 22 / 45%);
+  }
+
+  /* Rotating rings that carry the orbiting UAVs */
+  .orbit-ring {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+  }
+
+  .ring-inner {
+    --r: 80px;
+    animation: uav-spin 26s linear infinite;
+  }
+
+  .ring-outer {
+    --r: 110px;
+    animation: uav-spin 40s linear infinite reverse;
+  }
+
+  .uav-node {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    color: var(--color-primary);
+    transform: rotate(var(--angle)) translateY(calc(var(--r) * -1));
+  }
+
+  .uav-node.accent {
+    color: var(--color-accent);
+  }
+
+  .uav-node > svg {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    opacity: 0.9;
+    filter: drop-shadow(0 0 5px rgb(37 99 235 / 45%));
+  }
+
+  .uav-node.accent > svg {
+    filter: drop-shadow(0 0 5px rgb(249 115 22 / 45%));
+  }
+
+  @keyframes uav-spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  @keyframes uav-pulse {
+    0%,
+    100% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.09);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .orbit-ring,
+    .uav-core {
+      animation: none;
+    }
+  }
+
+  .visual-corner {
+    position: absolute;
+    color: var(--color-text-muted);
+    font-size: 0.6rem;
+    letter-spacing: 0.1em;
+  }
+
+  .top-left {
+    top: 18px;
+    left: 18px;
+  }
+
+  .bottom-right {
+    bottom: 18px;
+    right: 18px;
+  }
+
+  /* INTRODUCTION */
+  .intro {
+    border-bottom: 1px solid var(--color-border);
+    padding-block: 60px;
+  }
+
+  .intro-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+  }
+
+  .intro-text p + p {
+    margin-top: 18px;
+  }
+
+  /* Tinted section background (alternating strips) */
+  .research-section {
+    background: rgb(21 31 50 / 35%);
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 900px) {
+    .hero-container {
+      grid-template-columns: 1fr;
+    }
+
+    .hero-visual {
+      max-width: 550px;
+      width: 100%;
+    }
+
+    .intro-container {
+      grid-template-columns: 1fr;
+      gap: 36px;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .hero {
+      min-height: auto;
+    }
+
+    .hero-container {
+      padding-block: 52px;
+      gap: 44px;
+    }
+
+    .hero-tag {
+      font-size: 0.6rem;
+    }
+
+    .hero-visual {
+      height: 320px;
+    }
+  }
+</style>

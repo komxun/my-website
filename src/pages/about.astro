@@ -1,14 +1,237 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
+import Layout from "../layouts/Layout.astro";
+import PageHeader from "../components/PageHeader.astro";
+import { socials } from "../lib/site";
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+/*
+ * Edit the arrays and prose below to update your bio. Everything on this
+ * page is plain content — no collection needed.
+ */
+
+const focusAreas = [
+  "UAV Autonomy",
+  "Swarm Intelligence",
+  "Guidance, Navigation & Control",
+  "Reinforcement Learning",
+  "Robotics & Simulation",
+  "Optimisation",
+];
+
+const timeline = [
+  {
+    period: "2024 — Present",
+    title: "Research in Autonomous Aerial Systems",
+    detail:
+      "Developing intelligent guidance and multi-agent coordination algorithms for UAVs.",
+  },
+  {
+    period: "2022 — 2024",
+    title: "MSc Aerospace Engineering",
+    detail:
+      "Focused on flight dynamics, control systems and autonomous navigation.",
+  },
+  {
+    period: "2018 — 2022",
+    title: "BEng Aerospace Engineering",
+    detail: "Foundations in aerodynamics, propulsion and systems engineering.",
+  },
+];
 ---
-<a href="/">Home</a>
-<a href="/about/">About</a>
-<a href="/blog/">Blog</a>
-<h1>About Me</h1>
-<h2>... and my new Astro site!</h2>
-<p>I am working through Astro's introductory tutorial. This is the second page on my website, and it's the first one I built myself!</p>
-<p>This site will update as I complete more of the tutorial, so keep checking back and see how my journey is going!</p>
+
+<Layout
+  title="About | Komsun Tamanakijprasart"
+  description="About Komsun Tamanakijprasart — aerospace engineer working on UAV autonomy, swarm intelligence and intelligent control."
+>
+  <PageHeader
+    label="About"
+    title="Engineer, researcher, learner."
+    description="I work at the intersection of aerospace engineering, artificial intelligence and robotics — developing intelligent systems for autonomous flight."
+  />
+
+  <section class="section about-main">
+    <div class="container about-grid">
+      <div class="about-prose prose">
+        <p>
+          I'm an aerospace engineer specialising in autonomous aerial systems.
+          My work spans mathematical modelling, guidance and control, and
+          multi-agent coordination — turning theoretical research into
+          algorithms that operate reliably in complex, dynamic environments.
+        </p>
+        <p>
+          I'm particularly drawn to the hard problems at the boundary of
+          classical control and machine learning: how do we build systems that
+          are both provably safe and genuinely adaptive? This site collects my
+          research, engineering projects, software and technical writing.
+        </p>
+        <p>
+          When I'm not working on autonomy, I enjoy explaining engineering
+          concepts through <a href="/videos/">video</a> and
+          <a href="/knowledge/">writing</a>.
+        </p>
+      </div>
+
+      <aside class="about-aside">
+        <div class="card about-card">
+          <h3>Focus areas</h3>
+          <ul class="focus-list">
+            {focusAreas.map((area) => <li>{area}</li>)}
+          </ul>
+        </div>
+
+        {
+          socials.length > 0 && (
+            <div class="card about-card">
+              <h3>Elsewhere</h3>
+              <ul class="about-socials">
+                {socials.map((s) => (
+                  <li>
+                    <a
+                      href={s.href}
+                      target={s.href.startsWith("http") ? "_blank" : undefined}
+                      rel={s.href.startsWith("http") ? "noopener noreferrer" : undefined}
+                    >
+                      {s.label} <span aria-hidden="true">↗</span>
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )
+        }
+      </aside>
+    </div>
+  </section>
+
+  <section class="section timeline-section">
+    <div class="container">
+      <div class="section-header">
+        <p class="section-label">Journey</p>
+        <h2>A path through aerospace and autonomy.</h2>
+      </div>
+
+      <ol class="timeline">
+        {
+          timeline.map((item) => (
+            <li class="timeline-item">
+              <span class="timeline-period">{item.period}</span>
+              <div>
+                <h3>{item.title}</h3>
+                <p>{item.detail}</p>
+              </div>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1.6fr 1fr;
+    gap: 56px;
+    align-items: start;
+  }
+
+  .about-aside {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    position: sticky;
+    top: calc(var(--navbar-height) + 24px);
+  }
+
+  .about-card h3 {
+    margin-bottom: 16px;
+    font-size: 1.05rem;
+  }
+
+  .focus-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    list-style: none;
+  }
+
+  .focus-list li {
+    padding: 6px 11px;
+    border: 1px solid var(--color-border);
+    border-radius: 6px;
+    color: var(--color-text-muted);
+    font-size: 0.8rem;
+  }
+
+  .about-socials {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    list-style: none;
+  }
+
+  .about-socials a {
+    color: var(--color-text-muted);
+    font-weight: 500;
+  }
+
+  .about-socials a:hover {
+    color: var(--color-accent);
+  }
+
+  .timeline-section {
+    border-top: 1px solid var(--color-border);
+    background: rgb(21 31 50 / 35%);
+  }
+
+  .timeline {
+    list-style: none;
+    display: grid;
+    gap: 0;
+  }
+
+  .timeline-item {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 32px;
+    padding-block: 28px;
+    border-top: 1px solid var(--color-border);
+  }
+
+  .timeline-item:last-child {
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .timeline-period {
+    color: var(--color-accent);
+    font-family: var(--font-heading);
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+  }
+
+  .timeline-item h3 {
+    margin-bottom: 6px;
+  }
+
+  .timeline-item p {
+    font-size: 0.9rem;
+  }
+
+  @media (max-width: 860px) {
+    .about-grid {
+      grid-template-columns: 1fr;
+      gap: 36px;
+    }
+
+    .about-aside {
+      position: static;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .timeline-item {
+      grid-template-columns: 1fr;
+      gap: 8px;
+    }
+  }
+</style>

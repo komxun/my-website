@@ -1,0 +1,101 @@
+---
+import TagList from "./TagList.astro";
+import { youTubeThumbnail, youTubeWatchUrl } from "../lib/media";
+
+interface Props {
+  youtubeId: string;
+  title: string;
+  description: string;
+  meta?: string;
+  tags?: string[];
+}
+
+const { youtubeId, title, description, meta, tags = [] } = Astro.props;
+const watchUrl = youTubeWatchUrl(youtubeId);
+const thumb = youTubeThumbnail(youtubeId);
+---
+
+<article class="card video-card">
+  <a class="video-thumb" href={watchUrl} target="_blank" rel="noopener noreferrer">
+    <img src={thumb} alt={`Thumbnail for ${title}`} loading="lazy" width="480" height="360" />
+    <span class="video-play" aria-hidden="true">▶</span>
+  </a>
+
+  <div class="video-body">
+    <h3 class="video-title">
+      <a href={watchUrl} target="_blank" rel="noopener noreferrer">{title}</a>
+    </h3>
+    <p class="video-description">{description}</p>
+    {tags.length > 0 && <TagList tags={tags} />}
+    {meta && <span class="video-meta">{meta}</span>}
+  </div>
+</article>
+
+<style>
+  .video-card {
+    padding: 0;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .video-thumb {
+    position: relative;
+    display: block;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .video-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform var(--transition);
+  }
+
+  .video-card:hover .video-thumb img {
+    transform: scale(1.04);
+  }
+
+  .video-play {
+    position: absolute;
+    inset: 0;
+    margin: auto;
+    width: 56px;
+    height: 56px;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    background: rgb(11 17 32 / 72%);
+    border: 1px solid var(--color-border);
+    color: white;
+    font-size: 1rem;
+    padding-left: 4px;
+  }
+
+  .video-body {
+    padding: 20px 22px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .video-title {
+    font-size: 1.1rem;
+    line-height: 1.3;
+  }
+
+  .video-title a:hover {
+    color: var(--color-accent);
+  }
+
+  .video-description {
+    font-size: 0.88rem;
+  }
+
+  .video-meta {
+    color: var(--color-text-muted);
+    font-size: 0.76rem;
+  }
+</style>

@@ -1,0 +1,39 @@
+---
+import { getCollection, render } from "astro:content";
+import EntryLayout from "../../components/EntryLayout.astro";
+import { formatDate } from "../../lib/format";
+
+export async function getStaticPaths() {
+  const entries = await getCollection("projects", ({ data }) => !data.draft);
+  return entries.map((entry) => ({
+    params: { id: entry.id },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+
+const meta = [
+  entry.data.category,
+  entry.data.status,
+  formatDate(entry.data.date),
+];
+
+const links = [];
+if (entry.data.github) links.push({ label: "View code", href: entry.data.github });
+if (entry.data.demo) links.push({ label: "Live demo", href: entry.data.demo });
+---
+
+<EntryLayout
+  title={entry.data.title}
+  description={entry.data.description}
+  eyebrow="Project"
+  meta={meta}
+  tags={entry.data.tags}
+  links={links}
+  backHref="/projects/"
+  backLabel="All projects"
+>
+  <Content />
+</EntryLayout>

@@ -1,0 +1,39 @@
+---
+interface Props {
+  title?: string;
+  message: string;
+}
+
+const { title = "Nothing here yet", message } = Astro.props;
+---
+
+<div class="empty-state">
+  <div class="empty-icon" aria-hidden="true">✦</div>
+  <h3>{title}</h3>
+  <p>{message}</p>
+</div>
+
+<style>
+  .empty-state {
+    border: 1px dashed var(--color-border);
+    border-radius: var(--radius);
+    padding: 56px 32px;
+    text-align: center;
+  }
+
+  .empty-icon {
+    color: var(--color-accent);
+    font-size: 1.6rem;
+    margin-bottom: 12px;
+  }
+
+  .empty-state h3 {
+    margin-bottom: 8px;
+  }
+
+  .empty-state p {
+    max-width: 440px;
+    margin-inline: auto;
+    font-size: 0.9rem;
+  }
+</style>

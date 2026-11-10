@@ -1,23 +1,104 @@
+
+---
+import "../styles/global.css";
+import { site, navigation, socials } from "../lib/site";
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = `${site.name} | Aerospace Engineer`,
+  description = site.description
+} = Astro.props;
+
+const currentPath = Astro.url.pathname;
+
+const isActive = (href: string) =>
+  href === "/"
+    ? currentPath === "/"
+    : currentPath === href || currentPath.startsWith(href);
+---
+
 <!doctype html>
 <html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro Basics</title>
-	</head>
-	<body>
-		<slot />
-	</body>
-</html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-<style>
-	html,
-	body {
-		margin: 0;
-		width: 100%;
-		height: 100%;
-	}
-</style>
+    <meta name="description" content={description} />
+    <meta name="author" content="Komsun Tamanakijprasart" />
+    <meta name="generator" content={Astro.generator} />
+
+    <meta name="theme-color" content="#0B1120" />
+
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <title>{title}</title>
+  </head>
+
+  <body>
+    <header class="site-header">
+      <nav class="container nav-container" aria-label="Main navigation">
+        <a class="brand" href="/">
+          {site.brand}<span>.</span>
+        </a>
+
+        <ul class="nav-links">
+          {navigation.map((item) => (
+            <li>
+              <a
+                href={item.href}
+                aria-current={isActive(item.href) ? "page" : undefined}
+              >
+                {item.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+    </header>
+
+    <main>
+      <slot />
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-container">
+        <div>
+          <a class="brand" href="/">{site.brand}<span>.</span></a>
+          <p class="footer-tagline">{site.role}</p>
+        </div>
+
+        {socials.length > 0 && (
+          <ul class="footer-socials">
+            {socials.map((social) => (
+              <li>
+                <a
+                  href={social.href}
+                  target={social.href.startsWith("http") ? "_blank" : undefined}
+                  rel={social.href.startsWith("http") ? "noopener noreferrer" : undefined}
+                >
+                  {social.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        )}
+
+        <p class="footer-copy">
+          © {new Date().getFullYear()} {site.name}. Built with Astro.
+        </p>
+      </div>
+    </footer>
+  </body>
+</html>

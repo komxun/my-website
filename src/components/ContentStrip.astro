@@ -1,0 +1,351 @@
+---
+export interface StripItem {
+  href: string;
+  title: string;
+  eyebrow?: string;
+  meta?: string;
+  /** Image URL for the thumbnail. If omitted, a gradient placeholder is shown. */
+  thumbnail?: string;
+  thumbAlt?: string;
+  /** Opens in a new tab and shows an external glyph. */
+  external?: boolean;
+  /** Renders a play badge over the thumbnail (for videos). */
+  isVideo?: boolean;
+}
+
+interface Props {
+  label: string;
+  title: string;
+  description?: string;
+  viewAllHref: string;
+  viewAllLabel?: string;
+  items: StripItem[];
+  /** Extra classes for the section (e.g. a tinted background). */
+  class?: string;
+}
+
+const {
+  label,
+  title,
+  description,
+  viewAllHref,
+  viewAllLabel = "View all",
+  items,
+  class: className = "",
+} = Astro.props;
+
+import { gradientFor, initials } from "../lib/media";
+---
+
+<section class:list={["section strip-section", className]} data-strip>
+  <div class="container strip-head">
+    <div class="strip-heading">
+      <p class="section-label">{label}</p>
+      <h2>{title}</h2>
+      {description && <p class="strip-description">{description}</p>}
+    </div>
+
+    <div class="strip-controls">
+      <a href={viewAllHref} class="button button-outline">
+        {viewAllLabel} <span aria-hidden="true">→</span>
+      </a>
+      <div class="strip-arrows" aria-hidden="true">
+        <button type="button" class="strip-arrow" data-dir="-1" aria-label="Scroll left">←</button>
+        <button type="button" class="strip-arrow" data-dir="1" aria-label="Scroll right">→</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <ul class="strip-track" data-strip-track>
+      {
+        items.map((item) => (
+          <li class="strip-card">
+            <a
+              class="strip-link"
+              href={item.href}
+              target={item.external ? "_blank" : undefined}
+              rel={item.external ? "noopener noreferrer" : undefined}
+            >
+              <div class="strip-thumb">
+                {item.thumbnail ? (
+                  <img src={item.thumbnail} alt={item.thumbAlt ?? item.title} loading="lazy" />
+                ) : (
+                  <div class="strip-placeholder" style={`background:${gradientFor(item.title)}`}>
+                    <span class="strip-placeholder-mark">{initials(item.title) || "·"}</span>
+                    {item.eyebrow && <span class="strip-placeholder-tag">{item.eyebrow}</span>}
+                  </div>
+                )}
+                {item.isVideo && <span class="strip-play" aria-hidden="true">▶</span>}
+                {item.external && !item.isVideo && (
+                  <span class="strip-ext" aria-hidden="true">↗</span>
+                )}
+              </div>
+
+              <div class="strip-body">
+                {item.eyebrow && <span class="strip-eyebrow">{item.eyebrow}</span>}
+                <h3 class="strip-title">{item.title}</h3>
+                {item.meta && <span class="strip-meta">{item.meta}</span>}
+              </div>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
+
+<style>
+  .strip-section {
+    overflow: hidden;
+    padding-block: 60px;
+  }
+
+  .strip-head {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 24px;
+    margin-bottom: 20px;
+  }
+
+  .strip-heading {
+    max-width: 640px;
+  }
+
+  .strip-heading h2 {
+    margin-top: 6px;
+  }
+
+  .strip-description {
+    margin-top: 14px;
+    font-size: 0.98rem;
+  }
+
+  .strip-controls {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    flex-shrink: 0;
+  }
+
+  .strip-arrows {
+    display: flex;
+    gap: 8px;
+  }
+
+  .strip-arrow {
+    width: 42px;
+    height: 42px;
+    display: grid;
+    place-items: center;
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    background: var(--color-surface);
+    color: var(--color-text);
+    cursor: pointer;
+    transition: var(--transition);
+  }
+
+  .strip-arrow:hover:not(:disabled) {
+    border-color: var(--color-accent);
+    color: var(--color-accent);
+  }
+
+  .strip-arrow:disabled {
+    opacity: 0.35;
+    cursor: default;
+  }
+
+  /* The film strip itself */
+  .strip-track {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(280px, 300px);
+    gap: 20px;
+    list-style: none;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    scrollbar-width: none;
+    padding-bottom: 6px;
+    /* Let cards bleed to the viewport edge on the right. */
+    margin-right: calc((100vw - min(100% + 48px, var(--container-width) + 48px)) / -2);
+  }
+
+  .strip-track::-webkit-scrollbar {
+    display: none;
+  }
+
+  .strip-card {
+    scroll-snap-align: start;
+  }
+
+  .strip-link {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    transition: var(--transition);
+  }
+
+  .strip-link:hover {
+    border-color: var(--color-primary);
+    transform: translateY(-4px);
+  }
+
+  .strip-thumb {
+    position: relative;
+    aspect-ratio: 16 / 10;
+    overflow: hidden;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .strip-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform var(--transition);
+  }
+
+  .strip-link:hover .strip-thumb img {
+    transform: scale(1.05);
+  }
+
+  .strip-placeholder {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    place-items: center;
+    position: relative;
+  }
+
+  .strip-placeholder-mark {
+    font-family: var(--font-heading);
+    font-size: 2.4rem;
+    font-weight: 700;
+    color: rgb(255 255 255 / 92%);
+    letter-spacing: 0.04em;
+  }
+
+  .strip-placeholder-tag {
+    position: absolute;
+    bottom: 12px;
+    left: 14px;
+    font-size: 0.64rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgb(255 255 255 / 80%);
+  }
+
+  .strip-play,
+  .strip-ext {
+    position: absolute;
+    display: grid;
+    place-items: center;
+    background: rgb(11 17 32 / 72%);
+    border: 1px solid var(--color-border);
+    color: white;
+  }
+
+  .strip-play {
+    inset: 0;
+    margin: auto;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    padding-left: 3px;
+  }
+
+  .strip-ext {
+    top: 12px;
+    right: 12px;
+    width: 30px;
+    height: 30px;
+    border-radius: 7px;
+    font-size: 0.8rem;
+  }
+
+  .strip-body {
+    padding: 18px 20px 22px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    flex: 1;
+  }
+
+  .strip-eyebrow {
+    color: var(--color-accent);
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .strip-title {
+    font-size: 1.05rem;
+    line-height: 1.35;
+  }
+
+  .strip-link:hover .strip-title {
+    color: var(--color-accent);
+  }
+
+  .strip-meta {
+    margin-top: auto;
+    color: var(--color-text-muted);
+    font-size: 0.76rem;
+  }
+
+  @media (max-width: 600px) {
+    .strip-head {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .strip-arrows {
+      display: none;
+    }
+
+    .strip-track {
+      grid-auto-columns: minmax(240px, 82%);
+    }
+  }
+</style>
+
+<script>
+  // Wire each strip's arrows to scroll its own track by roughly one card width.
+  document.querySelectorAll<HTMLElement>("[data-strip]").forEach((section) => {
+    const track = section.querySelector<HTMLElement>("[data-strip-track]");
+    const arrows = section.querySelectorAll<HTMLButtonElement>(".strip-arrow");
+    if (!track) return;
+
+    const step = () => {
+      const card = track.querySelector<HTMLElement>(".strip-card");
+      const gap = parseFloat(getComputedStyle(track).columnGap || "20") || 20;
+      return (card?.offsetWidth ?? 300) + gap;
+    };
+
+    const update = () => {
+      const maxScroll = track.scrollWidth - track.clientWidth - 2;
+      arrows.forEach((btn) => {
+        const dir = Number(btn.dataset.dir);
+        btn.disabled =
+          dir < 0 ? track.scrollLeft <= 2 : track.scrollLeft >= maxScroll;
+      });
+    };
+
+    arrows.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        track.scrollBy({ left: Number(btn.dataset.dir) * step() });
+      });
+    });
+
+    track.addEventListener("scroll", update, { passive: true });
+    window.addEventListener("resize", update);
+    update();
+  });
+</script>

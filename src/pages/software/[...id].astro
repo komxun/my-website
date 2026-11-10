@@ -1,0 +1,36 @@
+---
+import { getCollection, render } from "astro:content";
+import EntryLayout from "../../components/EntryLayout.astro";
+import { formatDate } from "../../lib/format";
+
+export async function getStaticPaths() {
+  const entries = await getCollection("software", ({ data }) => !data.draft);
+  return entries.map((entry) => ({
+    params: { id: entry.id },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+
+const meta = [entry.data.language, formatDate(entry.data.date)];
+if (entry.data.stars != null) meta.push(`★ ${entry.data.stars}`);
+
+const links = [{ label: "View on GitHub", href: entry.data.github }];
+if (entry.data.demo) links.push({ label: "Live demo", href: entry.data.demo });
+if (entry.data.docs) links.push({ label: "Documentation", href: entry.data.docs });
+---
+
+<EntryLayout
+  title={entry.data.title}
+  description={entry.data.description}
+  eyebrow="Software"
+  meta={meta}
+  tags={entry.data.tags}
+  links={links}
+  backHref="/software/"
+  backLabel="All software"
+>
+  <Content />
+</EntryLayout>

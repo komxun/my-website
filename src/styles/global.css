@@ -1,0 +1,426 @@
+
+/* ==========================================
+   KOMSUN PORTFOLIO — GLOBAL DESIGN SYSTEM
+   ========================================== */
+
+/* 1. Design tokens */
+:root {
+  color-scheme: dark;
+
+  --color-bg: #0B1120;
+  --color-surface: #151F32;
+  --color-surface-light: #1E293B;
+
+  --color-primary: #2563EB;
+  --color-accent: #F97316;
+
+  --color-text: #E5E7EB;
+  --color-text-muted: #94A3B8;
+  --color-border: #334155;
+
+  --font-body: "Inter", sans-serif;
+  --font-heading: "Space Grotesk", sans-serif;
+
+  --container-width: 1200px;
+  --navbar-height: 76px;
+
+  --transition: 200ms ease;
+  --radius: 12px;
+}
+
+/* 2. Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: var(--navbar-height);
+}
+
+body {
+  min-height: 100vh;
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-body);
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font: inherit;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+/* 3. Typography */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  line-height: 1.2;
+  font-weight: 600;
+}
+
+h1 {
+  font-size: clamp(2.8rem, 6vw, 5rem);
+  letter-spacing: -0.055em;
+}
+
+h2 {
+  font-size: clamp(2rem, 4vw, 3rem);
+  letter-spacing: -0.035em;
+}
+
+h3 {
+  font-size: 1.25rem;
+}
+
+p {
+  color: var(--color-text-muted);
+}
+
+::selection {
+  background: var(--color-primary);
+  color: white;
+}
+
+/* 4. Reusable layout */
+.container {
+  width: min(100% - 48px, var(--container-width));
+  margin-inline: auto;
+}
+
+.section {
+  padding-block: 100px;
+}
+
+.section-header {
+  max-width: 680px;
+  margin-bottom: 48px;
+}
+
+.section-label {
+  color: var(--color-accent);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+
+/* 5. Buttons */
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 12px 22px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  transition: var(--transition);
+}
+
+.button-primary {
+  background: var(--color-primary);
+  color: white;
+}
+
+.button-primary:hover {
+  background: #1D4ED8;
+  transform: translateY(-2px);
+}
+
+.button-outline {
+  border-color: var(--color-border);
+  color: var(--color-text);
+}
+
+.button-outline:hover {
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+}
+
+/* 6. Navigation */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  height: var(--navbar-height);
+  background: rgb(11 17 32 / 90%);
+  border-bottom: 1px solid rgb(51 65 85 / 60%);
+  backdrop-filter: blur(16px);
+}
+
+.nav-container {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.brand {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 1.15rem;
+  letter-spacing: -0.04em;
+}
+
+.brand span {
+  color: var(--color-accent);
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  list-style: none;
+}
+
+.nav-links a {
+  color: var(--color-text-muted);
+  font-size: 0.88rem;
+  transition: var(--transition);
+}
+
+.nav-links a:hover,
+.nav-links a[aria-current="page"] {
+  color: var(--color-text);
+}
+
+/* 7. Cards */
+.card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  padding: 26px;
+  transition: var(--transition);
+}
+
+.card:hover {
+  border-color: var(--color-primary);
+  transform: translateY(-4px);
+}
+
+/* 7b. Content grid */
+.content-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+/* 7c. Prose — rendered Markdown content */
+.prose {
+  color: var(--color-text);
+  font-size: 1rem;
+  line-height: 1.8;
+}
+
+.prose > * + * {
+  margin-top: 1.1em;
+}
+
+.prose h1,
+.prose h2,
+.prose h3,
+.prose h4 {
+  line-height: 1.3;
+  margin-top: 1.8em;
+}
+
+.prose h2 {
+  font-size: 1.6rem;
+  padding-bottom: 0.3em;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.prose h3 {
+  font-size: 1.25rem;
+}
+
+.prose p,
+.prose li {
+  color: var(--color-text-muted);
+}
+
+.prose a {
+  color: var(--color-accent);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.prose ul,
+.prose ol {
+  padding-left: 1.4em;
+}
+
+.prose li + li {
+  margin-top: 0.4em;
+}
+
+.prose strong {
+  color: var(--color-text);
+}
+
+.prose blockquote {
+  border-left: 3px solid var(--color-accent);
+  padding-left: 18px;
+  color: var(--color-text-muted);
+  font-style: italic;
+}
+
+.prose img {
+  border-radius: var(--radius);
+  border: 1px solid var(--color-border);
+}
+
+.prose hr {
+  border: none;
+  border-top: 1px solid var(--color-border);
+}
+
+.prose code {
+  font-family: ui-monospace, "SFMono-Regular", "Menlo", monospace;
+  font-size: 0.88em;
+  background: var(--color-surface-light);
+  padding: 0.15em 0.4em;
+  border-radius: 5px;
+}
+
+.prose pre {
+  background: var(--color-surface) !important;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  padding: 18px 20px;
+  overflow-x: auto;
+  font-size: 0.85rem;
+}
+
+.prose pre code {
+  background: none;
+  padding: 0;
+  font-size: inherit;
+}
+
+.prose table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+.prose th,
+.prose td {
+  border: 1px solid var(--color-border);
+  padding: 8px 12px;
+  text-align: left;
+}
+
+.prose th {
+  background: var(--color-surface);
+  color: var(--color-text);
+}
+
+.prose td {
+  color: var(--color-text-muted);
+}
+
+/* 8. Footer */
+.site-footer {
+  border-top: 1px solid var(--color-border);
+  padding-block: 40px;
+  color: var(--color-text-muted);
+  font-size: 0.85rem;
+}
+
+.footer-container {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 20px 40px;
+  align-items: center;
+}
+
+.footer-tagline {
+  margin-top: 6px;
+  font-size: 0.82rem;
+}
+
+.footer-socials {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  list-style: none;
+}
+
+.footer-socials a {
+  color: var(--color-text-muted);
+  font-size: 0.85rem;
+  font-weight: 500;
+  transition: var(--transition);
+}
+
+.footer-socials a:hover {
+  color: var(--color-accent);
+}
+
+.footer-copy {
+  grid-column: 1 / -1;
+  padding-top: 20px;
+  border-top: 1px solid rgb(51 65 85 / 50%);
+  font-size: 0.8rem;
+}
+
+@media (max-width: 600px) {
+  .footer-container {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* 9. Responsive */
+@media (max-width: 768px) {
+  .container {
+    width: min(100% - 36px, var(--container-width));
+  }
+
+  .section {
+    padding-block: 68px;
+  }
+
+  .nav-links {
+    gap: 14px;
+  }
+
+  .nav-links a {
+    font-size: 0.75rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .nav-container {
+    gap: 16px;
+  }
+
+  .nav-links {
+    gap: 16px;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .nav-links::-webkit-scrollbar {
+    display: none;
+  }
+
+  .nav-links a {
+    white-space: nowrap;
+  }
+}

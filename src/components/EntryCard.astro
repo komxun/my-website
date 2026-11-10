@@ -1,0 +1,219 @@
+---
+import TagList from "./TagList.astro";
+import { gradientFor, initials } from "../lib/media";
+
+interface ExternalLink {
+  label: string;
+  href: string;
+}
+
+interface Props {
+  href?: string;
+  eyebrow?: string;
+  title: string;
+  description: string;
+  meta?: string;
+  tags?: string[];
+  cta?: string;
+  links?: ExternalLink[];
+  /** Optional thumbnail; falls back to a gradient placeholder when omitted. */
+  thumbnail?: string;
+  thumbAlt?: string;
+  showThumb?: boolean;
+}
+
+const {
+  href,
+  eyebrow,
+  title,
+  description,
+  meta,
+  tags = [],
+  cta = "Read more",
+  links = [],
+  thumbnail,
+  thumbAlt,
+  showThumb = false,
+} = Astro.props;
+---
+
+<article class:list={["card", "entry-card", { "has-thumb": showThumb }]}>
+  {
+    showThumb && (
+      <a class="entry-thumb" href={href} aria-hidden={href ? undefined : "true"}>
+        {thumbnail ? (
+          <img src={thumbnail} alt={thumbAlt ?? title} loading="lazy" />
+        ) : (
+          <div class="entry-placeholder" style={`background:${gradientFor(title)}`}>
+            <span class="entry-placeholder-mark">{initials(title)}</span>
+            {eyebrow && <span class="entry-placeholder-tag">{eyebrow}</span>}
+          </div>
+        )}
+      </a>
+    )
+  }
+
+  <div class="entry-content">
+    {eyebrow && <div class="entry-eyebrow">{eyebrow}</div>}
+
+    <h3 class="entry-title">
+      {href ? <a href={href}>{title}</a> : title}
+    </h3>
+
+    <p class="entry-description">{description}</p>
+
+    {tags.length > 0 && <TagList tags={tags} />}
+
+    <div class="entry-footer">
+      {meta && <span class="entry-meta">{meta}</span>}
+
+      <div class="entry-links">
+        {links.map((link) => (
+          <a class="entry-ext" href={link.href} target="_blank" rel="noopener noreferrer">
+            {link.label} <span aria-hidden="true">↗</span>
+          </a>
+        ))}
+        {href && (
+          <a class="text-link" href={href}>
+            {cta} <span aria-hidden="true">→</span>
+          </a>
+        )}
+      </div>
+    </div>
+  </div>
+</article>
+
+<style>
+  .entry-card {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    height: 100%;
+  }
+
+  /* Thumbnail variant: full-bleed image, padded content below. */
+  .entry-card.has-thumb {
+    padding: 0;
+    overflow: hidden;
+    gap: 0;
+  }
+
+  .entry-thumb {
+    display: block;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .entry-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform var(--transition);
+  }
+
+  .entry-card.has-thumb:hover .entry-thumb img {
+    transform: scale(1.05);
+  }
+
+  .entry-placeholder {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    place-items: center;
+    position: relative;
+  }
+
+  .entry-placeholder-mark {
+    font-family: var(--font-heading);
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: rgb(255 255 255 / 92%);
+    letter-spacing: 0.04em;
+  }
+
+  .entry-placeholder-tag {
+    position: absolute;
+    bottom: 12px;
+    left: 14px;
+    font-size: 0.62rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgb(255 255 255 / 80%);
+  }
+
+  .entry-content {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    flex: 1;
+  }
+
+  .entry-card.has-thumb .entry-content {
+    padding: 22px 24px 24px;
+  }
+
+  .entry-eyebrow {
+    color: var(--color-accent);
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+
+  .entry-title {
+    font-size: 1.2rem;
+    line-height: 1.3;
+  }
+
+  .entry-title a:hover {
+    color: var(--color-accent);
+  }
+
+  .entry-description {
+    font-size: 0.9rem;
+  }
+
+  .entry-footer {
+    margin-top: auto;
+    padding-top: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  .entry-meta {
+    color: var(--color-text-muted);
+    font-size: 0.78rem;
+    letter-spacing: 0.02em;
+  }
+
+  .entry-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    align-items: center;
+  }
+
+  .entry-ext {
+    color: var(--color-text-muted);
+    font-size: 0.82rem;
+    font-weight: 600;
+  }
+
+  .entry-ext:hover {
+    color: var(--color-text);
+  }
+
+  .text-link {
+    color: var(--color-accent);
+    font-size: 0.85rem;
+    font-weight: 600;
+  }
+
+  .text-link:hover {
+    text-decoration: underline;
+  }
+</style>

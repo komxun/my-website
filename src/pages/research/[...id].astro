@@ -1,0 +1,43 @@
+---
+import { getCollection, render } from "astro:content";
+import EntryLayout from "../../components/EntryLayout.astro";
+import { formatDate } from "../../lib/format";
+
+export async function getStaticPaths() {
+  const entries = await getCollection("research", ({ data }) => !data.draft);
+  return entries.map((entry) => ({
+    params: { id: entry.id },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+const d = entry.data;
+
+const meta = [
+  d.area,
+  d.status,
+  formatDate(d.date),
+  ...(d.authors.length ? [d.authors.join(", ")] : []),
+  ...(d.venue ? [d.venue] : []),
+  ...(d.doi ? [`DOI: ${d.doi}`] : []),
+];
+
+const links = [];
+if (d.paperUrl) links.push({ label: "Read the paper", href: d.paperUrl });
+if (d.pdf) links.push({ label: "Download PDF", href: d.pdf });
+---
+
+<EntryLayout
+  title={d.title}
+  description={d.description}
+  eyebrow="Research"
+  meta={meta}
+  tags={d.tags}
+  links={links}
+  backHref="/research/"
+  backLabel="All research"
+>
+  <Content />
+</EntryLayout>

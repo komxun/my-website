@@ -1,0 +1,154 @@
+---
+import Layout from "../layouts/Layout.astro";
+import TagList from "./TagList.astro";
+
+interface ExternalLink {
+  label: string;
+  href: string;
+}
+
+interface Props {
+  title: string;
+  description?: string;
+  eyebrow?: string;
+  meta?: string[];
+  tags?: string[];
+  backHref: string;
+  backLabel: string;
+  links?: ExternalLink[];
+}
+
+const {
+  title,
+  description,
+  eyebrow,
+  meta = [],
+  tags = [],
+  backHref,
+  backLabel,
+  links = [],
+} = Astro.props;
+---
+
+<Layout title={`${title} | Komsun Tamanakijprasart`} description={description}>
+  <article class="entry">
+    <div class="container entry-inner">
+      <a class="entry-back" href={backHref}>
+        <span aria-hidden="true">←</span> {backLabel}
+      </a>
+
+      {eyebrow && <p class="section-label entry-eyebrow">{eyebrow}</p>}
+
+      <h1 class="entry-heading">{title}</h1>
+
+      {description && <p class="entry-lede">{description}</p>}
+
+      {
+        meta.length > 0 && (
+          <div class="entry-meta">
+            {meta.map((item) => (
+              <span>{item}</span>
+            ))}
+          </div>
+        )
+      }
+
+      {tags.length > 0 && <div class="entry-tags"><TagList tags={tags} /></div>}
+
+      {
+        links.length > 0 && (
+          <div class="entry-actions">
+            {links.map((link) => (
+              <a
+                class="button button-outline"
+                href={link.href}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {link.label} <span aria-hidden="true">↗</span>
+              </a>
+            ))}
+          </div>
+        )
+      }
+
+      <div class="prose">
+        <slot />
+      </div>
+    </div>
+  </article>
+</Layout>
+
+<style>
+  .entry {
+    padding-block: 72px 100px;
+  }
+
+  .entry-inner {
+    max-width: 760px;
+  }
+
+  .entry-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--color-text-muted);
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-bottom: 36px;
+  }
+
+  .entry-back:hover {
+    color: var(--color-accent);
+  }
+
+  .entry-eyebrow {
+    margin-bottom: 14px;
+  }
+
+  .entry-heading {
+    font-size: clamp(2.2rem, 4.5vw, 3.4rem);
+  }
+
+  .entry-lede {
+    font-size: 1.15rem;
+    color: var(--color-text);
+    margin-top: 20px;
+  }
+
+  .entry-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 20px;
+    margin-top: 24px;
+    color: var(--color-text-muted);
+    font-size: 0.82rem;
+  }
+
+  .entry-meta span {
+    position: relative;
+  }
+
+  .entry-meta span + span::before {
+    content: "·";
+    position: absolute;
+    left: -12px;
+  }
+
+  .entry-tags {
+    margin-top: 20px;
+  }
+
+  .entry-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 28px;
+  }
+
+  .prose {
+    margin-top: 44px;
+    padding-top: 44px;
+    border-top: 1px solid var(--color-border);
+  }
+</style>
