@@ -21,8 +21,10 @@ const meta = [
 ];
 
 const links = [];
+if (entry.data.website) links.push({ label: "Official website", href: entry.data.website });
 if (entry.data.github) links.push({ label: "View code", href: entry.data.github });
 if (entry.data.demo) links.push({ label: "Live demo", href: entry.data.demo });
+if (entry.data.pdf) links.push({ label: "Download PDF", href: entry.data.pdf });
 ---
 
 <EntryLayout
@@ -32,6 +34,7 @@ if (entry.data.demo) links.push({ label: "Live demo", href: entry.data.demo });
   meta={meta}
   tags={entry.data.tags}
   links={links}
+  cover={entry.data.cover}
   backHref="/projects/"
   backLabel="All projects"
 >

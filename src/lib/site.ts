@@ -7,8 +7,8 @@
 
 export const site = {
   name: "Komsun Tamanakijprasart",
-  brand: "KOMSUN",
-  role: "Aerospace & Autonomous Systems Engineer",
+  brand: "KOMSUN T",
+  role: "Aerospace & Autonomous Vehicle Engineer",
   description:
     "Aerospace engineer specialising in UAV autonomy, swarm intelligence, guidance, navigation and control.",
 };

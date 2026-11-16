@@ -55,6 +55,8 @@ const softwareItems: StripItem[] = pick(
   title: e.data.title,
   eyebrow: e.data.language,
   meta: e.data.stars != null ? `★ ${e.data.stars}` : formatYear(e.data.date),
+  thumbnail: e.data.cover?.src,
+  thumbAlt: e.data.cover?.alt,
 }));
 
 const knowledgeItems: StripItem[] = pick(
@@ -161,7 +163,7 @@ const videoItems: StripItem[] = pick(
           </div>
         </div>
 
-        <div class="visual-corner top-left">01 / SYSTEMS</div>
+        <div class="visual-corner top-left">GNC | COLLISION AVOIDANCE | MULTI-AGENT SYSTEMS</div>
         <div class="visual-corner bottom-right">ENGINEERING / 2026</div>
       </div>
 
@@ -218,8 +220,8 @@ const videoItems: StripItem[] = pick(
   <!-- ENGINEERING PROJECTS -->
   {projectItems.length > 0 && (
     <ContentStrip
-      label="03 / ENGINEERING"
-      title="From algorithms to autonomous systems."
+      label="03 / PROJECTS"
+      title="From stakeholder needs to engineering solutions."
       description="Selected engineering projects, implementations and experimental demonstrations."
       viewAllHref="/projects/"
       viewAllLabel="All projects"
@@ -256,8 +258,8 @@ const videoItems: StripItem[] = pick(
   {videoItems.length > 0 && (
     <ContentStrip
       label="06 / VIDEOS"
-      title="Engineering, explained on video."
-      description="Walkthroughs and explainers on autonomy, control and aerospace engineering."
+      title="Don't forget to have fun!"
+      description="A reminder that engineering is not just about solving problems — it's also about curiosity, and enjoying the process."
       viewAllHref="/videos/"
       viewAllLabel="All videos"
       items={videoItems}

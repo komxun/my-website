@@ -54,8 +54,10 @@ const projects = defineCollection({
     status: z.enum(["active", "completed", "archived"]).default("active"),
     tags,
     cover,
+    website: z.string().url().optional(),
     github: z.string().url().optional(),
     demo: z.string().url().optional(),
+    pdf: z.string().optional(), // path to a PDF, e.g. "/papers/proposal.pdf"
     featured: z.boolean().default(false),
     order: z.number().default(0),
     draft: z.boolean().default(false),
@@ -75,6 +77,7 @@ const software = defineCollection({
     demo: z.string().url().optional(),
     docs: z.string().url().optional(),
     stars: z.number().optional(),
+    cover,
     featured: z.boolean().default(false),
     order: z.number().default(0),
     draft: z.boolean().default(false),

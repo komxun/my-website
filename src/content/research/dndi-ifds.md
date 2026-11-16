@@ -2,8 +2,8 @@
 title: "Multi-Agent Path Planning in Dynamic Environment with Communication Disruptions"
 description: "This research proposes a cooperative multi-agent path planning strategy that integrates DNDI-based leader–follower formation control with IFDS-based obstacle avoidance. The approach enables agents to navigate static and dynamic environments while maintaining safe separation, even without inter-agent communication."
 area: "Multi-Agent Systems"
-date: 2025-01-15
-status: "ongoing"
+date: 2025-07-01
+status: "completed"
 tags: ["swarm", "multi-agent", "coordination"]
 venue: "IEEE, International Conference on Control, Automation and Diagnosis (ICCAD), 2025"
 authors: ["K. Tamanakijprasart", "A. Collaborator"]
@@ -14,7 +14,7 @@ cover:
   src: "/images/research/dndi.png"
   alt: "Simulated UAV swarm maintaining a formation"
 featured: true
-order: 10
+order: 2
 ---
 
 ## Overview

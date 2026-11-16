@@ -1,14 +1,16 @@
 ---
-title: "flight-sim-tools"
+title: "UAS Modelling with Simscape"
 description: "A Python toolkit for setting up ArduPilot + Gazebo software-in-the-loop simulations quickly."
-language: "Python"
+language: "MathWorks"
 date: 2025-02-01
-tags: ["python", "ardupilot", "gazebo", "simulation"]
+tags: ["simscape", "modeling", "simulation"]
 github: "https://github.com/komsun/flight-sim-tools"
 docs: "https://example.com/flight-sim-tools/docs"
 stars: 42
 featured: true
 order: 10
+cover:
+  src: "/images/software/simscape.png"
 ---
 
 ## What it does

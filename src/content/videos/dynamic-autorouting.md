@@ -1,11 +1,11 @@
 ---
-title: "Dynamic Autorouting"
+title: "Dynamic Autorouting for UAS in Rapidly Changing Environments"
 description: "A short demo of multiple UAVs maintaining a formation and splitting around obstacles."
 youtubeId: "XtmcNa-w4-0?si=9e2X_A7RIOD8KXqT"
 date: 2025-01-22
-category: "Demo"
+category: "Collision Avoidance"
 tags: ["collision avoidance",  "demo"]
-order: 5
+order: 1
 ---
 
 Add a short description or notes about the video here. This entry lives at

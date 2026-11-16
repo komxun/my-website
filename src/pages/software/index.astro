@@ -43,6 +43,9 @@ function externalLinks(data: (typeof entries)[number]["data"]) {
                 tags={entry.data.tags}
                 links={externalLinks(entry.data)}
                 cta="Details"
+                showThumb={true}
+                thumbnail={entry.data.cover?.src}
+                thumbAlt={entry.data.cover?.alt}
               />
             ))}
           </div>

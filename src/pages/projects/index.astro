@@ -12,8 +12,10 @@ const entries = (await getCollection("projects", ({ data }) => !data.draft)).sor
 
 function externalLinks(data: (typeof entries)[number]["data"]) {
   const links = [];
+  if (data.website) links.push({ label: "Website", href: data.website });
   if (data.github) links.push({ label: "Code", href: data.github });
   if (data.demo) links.push({ label: "Demo", href: data.demo });
+  if (data.pdf) links.push({ label: "PDF", href: data.pdf });
   return links;
 }
 ---
@@ -43,6 +45,9 @@ function externalLinks(data: (typeof entries)[number]["data"]) {
                 tags={entry.data.tags}
                 links={externalLinks(entry.data)}
                 cta="View project"
+                showThumb={true}
+                thumbnail={entry.data.cover?.src}
+                thumbAlt={entry.data.cover?.alt}
               />
             ))}
           </div>
