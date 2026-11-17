@@ -13,19 +13,19 @@ cover:
 ---
 <div class="gallery gallery--strip">
   <div class="marquee">
-    <a class="wide" href="/images/projects/craneaero/20250921_142726.jpg" target="_blank" rel="noopener"><img src="/images/projects/craneaero/20250921_142726.jpg" alt="CraneAero build" loading="lazy" /></a>
-    <a class="tall" href="/images/projects/craneaero/20250921_142848.jpg" target="_blank" rel="noopener"><img src="/images/projects/craneaero/20250921_142848.jpg" alt="CraneAero airframe" loading="lazy" /></a>
-    <a href="/images/projects/craneaero/20250921_212546.jpg" target="_blank" rel="noopener"><img src="/images/projects/craneaero/20250921_212546.jpg" alt="CraneAero testing" loading="lazy" /></a>
-    <a class="wide" href="/images/projects/craneaero/IMG-20251001-WA0004.jpg" target="_blank" rel="noopener"><img src="/images/projects/craneaero/IMG-20251001-WA0004.jpg" alt="CraneAero in the field" loading="lazy" /></a>
-    <a class="tall" href="/images/projects/craneaero/IMG-20251106-WA0011.jpg" target="_blank" rel="noopener"><img src="/images/projects/craneaero/IMG-20251106-WA0011.jpg" alt="CraneAero team" loading="lazy" /></a>
-    <a href="/images/projects/craneaero/1739450382124.jfif" target="_blank" rel="noopener"><img src="/images/projects/craneaero/1739450382124.jfif" alt="CraneAero prototype" loading="lazy" /></a>
+    <a class="wide" href="/images/projects/craneaero/20250921_142726.png" target="_blank" rel="noopener"><img src="/images/projects/craneaero/20250921_142726.png" alt="CraneAero build" loading="lazy" /></a>
+    <a class="tall" href="/images/projects/craneaero/20250921_142848.png" target="_blank" rel="noopener"><img src="/images/projects/craneaero/20250921_142848.png" alt="CraneAero airframe" loading="lazy" /></a>
+    <a href="/images/projects/craneaero/20250921_212546.png" target="_blank" rel="noopener"><img src="/images/projects/craneaero/20250921_212546.png" alt="CraneAero testing" loading="lazy" /></a>
+    <a class="wide" href="/images/projects/craneaero/IMG-20251001-WA0004.png" target="_blank" rel="noopener"><img src="/images/projects/craneaero/IMG-20251001-WA0004.png" alt="CraneAero in the field" loading="lazy" /></a>
+    <a class="tall" href="/images/projects/craneaero/IMG-20251106-WA0011.png" target="_blank" rel="noopener"><img src="/images/projects/craneaero/IMG-20251106-WA0011.png" alt="CraneAero team" loading="lazy" /></a>
+    <a href="/images/projects/craneaero/1739450382124.png" target="_blank" rel="noopener"><img src="/images/projects/craneaero/1739450382124.png" alt="CraneAero prototype" loading="lazy" /></a>
     <!-- duplicate set for a seamless loop (aria-hidden) -->
-    <a class="wide" href="/images/projects/craneaero/20250921_142726.jpg" target="_blank" rel="noopener" aria-hidden="true" tabindex="-1"><img src="/images/projects/craneaero/20250921_142726.jpg" alt="" loading="lazy" /></a>
-    <a class="tall" href="/images/projects/craneaero/20250921_142848.jpg" target="_blank" rel="noopener" aria-hidden="true" tabindex="-1"><img src="/images/projects/craneaero/20250921_142848.jpg" alt="" loading="lazy" /></a>
-    <a href="/images/projects/craneaero/20250921_212546.jpg" target="_blank" rel="noopener" aria-hidden="true" tabindex="-1"><img src="/images/projects/craneaero/20250921_212546.jpg" alt="" loading="lazy" /></a>
-    <a class="wide" href="/images/projects/craneaero/IMG-20251001-WA0004.jpg" target="_blank" rel="noopener" aria-hidden="true" tabindex="-1"><img src="/images/projects/craneaero/IMG-20251001-WA0004.jpg" alt="" loading="lazy" /></a>
-    <a class="tall" href="/images/projects/craneaero/IMG-20251106-WA0011.jpg" target="_blank" rel="noopener" aria-hidden="true" tabindex="-1"><img src="/images/projects/craneaero/IMG-20251106-WA0011.jpg" alt="" loading="lazy" /></a>
-    <a href="/images/projects/craneaero/1739450382124.jfif" target="_blank" rel="noopener" aria-hidden="true" tabindex="-1"><img src="/images/projects/craneaero/1739450382124.jfif" alt="" loading="lazy" /></a>
+    <a class="wide" href="/images/projects/craneaero/20250921_142726.png" target="_blank" rel="noopener" aria-hidden="true" tabindex="-1"><img src="/images/projects/craneaero/20250921_142726.png" alt="" loading="lazy" /></a>
+    <a class="tall" href="/images/projects/craneaero/20250921_142848.png" target="_blank" rel="noopener" aria-hidden="true" tabindex="-1"><img src="/images/projects/craneaero/20250921_142848.png" alt="" loading="lazy" /></a>
+    <a href="/images/projects/craneaero/20250921_212546.png" target="_blank" rel="noopener" aria-hidden="true" tabindex="-1"><img src="/images/projects/craneaero/20250921_212546.png" alt="" loading="lazy" /></a>
+    <a class="wide" href="/images/projects/craneaero/IMG-20251001-WA0004.png" target="_blank" rel="noopener" aria-hidden="true" tabindex="-1"><img src="/images/projects/craneaero/IMG-20251001-WA0004.png" alt="" loading="lazy" /></a>
+    <a class="tall" href="/images/projects/craneaero/IMG-20251106-WA0011.png" target="_blank" rel="noopener" aria-hidden="true" tabindex="-1"><img src="/images/projects/craneaero/IMG-20251106-WA0011.png" alt="" loading="lazy" /></a>
+    <a href="/images/projects/craneaero/1739450382124.png" target="_blank" rel="noopener" aria-hidden="true" tabindex="-1"><img src="/images/projects/craneaero/1739450382124.png" alt="" loading="lazy" /></a>
   </div>
 </div>
 
