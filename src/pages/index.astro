@@ -8,17 +8,21 @@ import type { StripItem } from "../components/ContentStrip.astro";
 import { byDateDesc, formatYear, formatDate } from "../lib/format";
 import { youTubeThumbnail, youTubeWatchUrl } from "../lib/media";
 import fs from "node:fs";
+import path from "node:path";
 
 /*
  * Hero background video (self-hosted). Drop a clip at public/videos/hero.mp4
  * (and optionally a still at public/images/hero-poster.jpg). If the file is
  * absent, the animated drone constellation is shown instead.
+ *
+ * Resolve from process.cwd() (the project root) so the check works the same in
+ * local dev and in the production `astro build` Netlify runs.
  */
 const heroVideo = "/videos/hero.mp4";
 const heroPoster = "/images/hero-poster.jpg";
-const publicDir = new URL("../../public", import.meta.url);
-const hasHeroVideo = fs.existsSync(new URL(`.${heroVideo}`, publicDir + "/"));
-const hasHeroPoster = fs.existsSync(new URL(`.${heroPoster}`, publicDir + "/"));
+const inPublic = (p: string) => path.join(process.cwd(), "public", p);
+const hasHeroVideo = fs.existsSync(inPublic(heroVideo));
+const hasHeroPoster = fs.existsSync(inPublic(heroPoster));
 
 /** Featured first, then newest; capped to `limit`. */
 function pick<T extends { data: { featured: boolean; date: Date; order?: number } }>(
