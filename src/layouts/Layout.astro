@@ -65,6 +65,10 @@ const isActive = (href: string) =>
             </li>
           ))}
         </ul>
+
+        <a class="nav-cv" href={site.cv} target="_blank" rel="noopener noreferrer">
+          CV <span aria-hidden="true">↓</span>
+        </a>
       </nav>
     </header>
 
@@ -79,21 +83,22 @@ const isActive = (href: string) =>
           <p class="footer-tagline">{site.role}</p>
         </div>
 
-        {socials.length > 0 && (
-          <ul class="footer-socials">
-            {socials.map((social) => (
-              <li>
-                <a
-                  href={social.href}
-                  target={social.href.startsWith("http") ? "_blank" : undefined}
-                  rel={social.href.startsWith("http") ? "noopener noreferrer" : undefined}
-                >
-                  {social.label}
-                </a>
-              </li>
-            ))}
-          </ul>
-        )}
+        <ul class="footer-socials">
+          <li>
+            <a href={site.cv} target="_blank" rel="noopener noreferrer">CV</a>
+          </li>
+          {socials.map((social) => (
+            <li>
+              <a
+                href={social.href}
+                target={social.href.startsWith("http") ? "_blank" : undefined}
+                rel={social.href.startsWith("http") ? "noopener noreferrer" : undefined}
+              >
+                {social.label}
+              </a>
+            </li>
+          ))}
+        </ul>
 
         <p class="footer-copy">
           © {new Date().getFullYear()} {site.name}. Built with Astro.

@@ -11,6 +11,8 @@ export const site = {
   role: "Aerospace & Autonomous Vehicle Engineer",
   description:
     "Aerospace engineer specialising in UAV autonomy, swarm intelligence, guidance, navigation and control.",
+  // Stable CV path — overwrite this file on updates so the link never breaks.
+  cv: "/Komsun_Tamanakijprasart_CV.pdf",
 };
 
 export const navigation = [

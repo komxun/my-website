@@ -18,11 +18,13 @@ cover:
     <a href="/images/projects/di-pegasus/1793878169729.png" target="_blank" rel="noopener"><img src="/images/projects/di-pegasus/1793878169729.png" alt="Presentation on Di-Pegasus sustainable aviation technologies" loading="lazy" /></a>
     <a href="/images/projects/di-pegasus/1793898765338.png" target="_blank" rel="noopener"><img src="/images/projects/di-pegasus/1793898765338.png" alt="Di-Pegasus panel discussion" loading="lazy" /></a>
     <a href="/images/projects/di-pegasus/di-pegasus.png" target="_blank" rel="noopener"><img src="/images/projects/di-pegasus/di-pegasus.png" alt="Di-Pegasus consortium group at the Chios meeting, May 2026" loading="lazy" /></a>
+    <a href="/images/projects/di-pegasus/poster.png" target="_blank" rel="noopener"><img src="/images/projects/di-pegasus/poster.png" alt="Di-Pegasus poster presentation" loading="lazy" /></a>
     <!-- Duplicate set for a seamless loop (aria-hidden). -->
     <a class="wide" href="/images/projects/di-pegasus/videoframe_9660.png" target="_blank" rel="noopener" aria-hidden="true" tabindex="-1"><img src="/images/projects/di-pegasus/videoframe_9660.png" alt="" loading="lazy" /></a>
     <a href="/images/projects/di-pegasus/1793878169729.png" target="_blank" rel="noopener" aria-hidden="true" tabindex="-1"><img src="/images/projects/di-pegasus/1793878169729.png" alt="" loading="lazy" /></a>
     <a href="/images/projects/di-pegasus/1793898765338.png" target="_blank" rel="noopener" aria-hidden="true" tabindex="-1"><img src="/images/projects/di-pegasus/1793898765338.png" alt="" loading="lazy" /></a>
     <a href="/images/projects/di-pegasus/di-pegasus.png" target="_blank" rel="noopener" aria-hidden="true" tabindex="-1"><img src="/images/projects/di-pegasus/di-pegasus.png" alt="" loading="lazy" /></a>
+    <a href="/images/projects/di-pegasus/poster.png" target="_blank" rel="noopener" aria-hidden="true" tabindex="-1"><img src="/images/projects/di-pegasus/poster.png" alt="" loading="lazy" /></a>
   </div>
 </div>
 

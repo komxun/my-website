@@ -7,6 +7,18 @@ import DroneIcon from "../components/DroneIcon.astro";
 import type { StripItem } from "../components/ContentStrip.astro";
 import { byDateDesc, formatYear, formatDate } from "../lib/format";
 import { youTubeThumbnail, youTubeWatchUrl } from "../lib/media";
+import fs from "node:fs";
+
+/*
+ * Hero background video (self-hosted). Drop a clip at public/videos/hero.mp4
+ * (and optionally a still at public/images/hero-poster.jpg). If the file is
+ * absent, the animated drone constellation is shown instead.
+ */
+const heroVideo = "/videos/hero.mp4";
+const heroPoster = "/images/hero-poster.jpg";
+const publicDir = new URL("../../public", import.meta.url);
+const hasHeroVideo = fs.existsSync(new URL(`.${heroVideo}`, publicDir + "/"));
+const hasHeroPoster = fs.existsSync(new URL(`.${heroPoster}`, publicDir + "/"));
 
 /** Featured first, then newest; capped to `limit`. */
 function pick<T extends { data: { featured: boolean; date: Date; order?: number } }>(
@@ -91,7 +103,24 @@ const videoItems: StripItem[] = pick(
 >
 
   <!-- HERO SECTION -->
-  <section class="hero">
+  <section class:list={["hero", { "hero--video": hasHeroVideo }]}>
+    {hasHeroVideo && (
+      <div class="hero-bg">
+        <video
+          class="hero-video"
+          autoplay
+          muted
+          loop
+          playsinline
+          preload="metadata"
+          poster={hasHeroPoster ? heroPoster : undefined}
+        >
+          <source src={heroVideo} type="video/mp4" />
+        </video>
+        <div class="hero-bg-fade" aria-hidden="true"></div>
+      </div>
+    )}
+
     <div class="container hero-container">
 
       <div class="hero-content">
@@ -130,42 +159,44 @@ const videoItems: StripItem[] = pick(
 
       </div>
 
-      <div class="hero-visual">
-        <div class="visual-grid"></div>
+      {!hasHeroVideo && (
+        <div class="hero-visual">
+          <div class="visual-grid"></div>
 
-        <div class="visual-content">
-          <div class="visual-label">AUTONOMOUS SYSTEMS</div>
+          <div class="visual-content">
+            <div class="visual-label">AUTONOMOUS SYSTEMS</div>
 
-          <div class="visual-symbol">
-            <div class="orbit orbit-one"></div>
-            <div class="orbit orbit-two"></div>
+            <div class="visual-symbol">
+              <div class="orbit orbit-one"></div>
+              <div class="orbit orbit-two"></div>
 
-            <!-- Orbiting UAV constellation -->
-            <div class="orbit-ring ring-inner">
-              <span class="uav-node" style="--angle: 30deg"><DroneIcon size={22} /></span>
-              <span class="uav-node" style="--angle: 160deg"><DroneIcon size={22} /></span>
-              <span class="uav-node" style="--angle: 265deg"><DroneIcon size={22} /></span>
+              <!-- Orbiting UAV constellation -->
+              <div class="orbit-ring ring-inner">
+                <span class="uav-node" style="--angle: 30deg"><DroneIcon size={22} /></span>
+                <span class="uav-node" style="--angle: 160deg"><DroneIcon size={22} /></span>
+                <span class="uav-node" style="--angle: 265deg"><DroneIcon size={22} /></span>
+              </div>
+
+              <div class="orbit-ring ring-outer">
+                <span class="uav-node accent" style="--angle: 0deg"><DroneIcon size={20} /></span>
+                <span class="uav-node" style="--angle: 90deg"><DroneIcon size={20} /></span>
+                <span class="uav-node accent" style="--angle: 200deg"><DroneIcon size={20} /></span>
+                <span class="uav-node" style="--angle: 300deg"><DroneIcon size={20} /></span>
+              </div>
+
+              <!-- Lead UAV -->
+              <div class="uav-core"><DroneIcon size={46} /></div>
             </div>
 
-            <div class="orbit-ring ring-outer">
-              <span class="uav-node accent" style="--angle: 0deg"><DroneIcon size={20} /></span>
-              <span class="uav-node" style="--angle: 90deg"><DroneIcon size={20} /></span>
-              <span class="uav-node accent" style="--angle: 200deg"><DroneIcon size={20} /></span>
-              <span class="uav-node" style="--angle: 300deg"><DroneIcon size={20} /></span>
+            <div class="visual-coordinates">
+              GUIDANCE · NAVIGATION · CONTROL
             </div>
-
-            <!-- Lead UAV -->
-            <div class="uav-core"><DroneIcon size={46} /></div>
           </div>
 
-          <div class="visual-coordinates">
-            GUIDANCE · NAVIGATION · CONTROL
-          </div>
+          <div class="visual-corner top-left">GNC | COLLISION AVOIDANCE | MULTI-AGENT SYSTEMS</div>
+          <div class="visual-corner bottom-right">ENGINEERING / 2026</div>
         </div>
-
-        <div class="visual-corner top-left">GNC | COLLISION AVOIDANCE | MULTI-AGENT SYSTEMS</div>
-        <div class="visual-corner bottom-right">ENGINEERING / 2026</div>
-      </div>
+      )}
 
     </div>
   </section>
@@ -291,6 +322,54 @@ const videoItems: StripItem[] = pick(
   .hero-content {
     position: relative;
     z-index: 2;
+  }
+
+  /* Full-bleed faded video background */
+  .hero--video {
+    min-height: 600px;
+  }
+
+  .hero--video .hero-container {
+    grid-template-columns: 1fr;
+  }
+
+  .hero--video .hero-content {
+    max-width: 640px;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+  }
+
+  .hero-bg .hero-video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /* Fade the video into the page: darker on the left for text legibility,
+     and blending into the background colour at the bottom edge. */
+  .hero-bg-fade {
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(
+        to right,
+        var(--color-bg) 0%,
+        rgb(11 17 32 / 80%) 32%,
+        rgb(11 17 32 / 35%) 70%,
+        rgb(11 17 32 / 25%) 100%
+      ),
+      linear-gradient(
+        to bottom,
+        rgb(11 17 32 / 55%) 0%,
+        transparent 30%,
+        transparent 65%,
+        var(--color-bg) 100%
+      );
+    pointer-events: none;
   }
 
   .hero-tag {
@@ -499,6 +578,7 @@ const videoItems: StripItem[] = pick(
 
   .visual-corner {
     position: absolute;
+    z-index: 2;
     color: var(--color-text-muted);
     font-size: 0.6rem;
     letter-spacing: 0.1em;
@@ -571,3 +651,13 @@ const videoItems: StripItem[] = pick(
     }
   }
 </style>
+
+<script>
+  // Respect reduced-motion: freeze the hero video on its poster frame.
+  const media = window.matchMedia("(prefers-reduced-motion: reduce)");
+  const video = document.querySelector<HTMLVideoElement>(".hero-video");
+  if (video && media.matches) {
+    video.removeAttribute("autoplay");
+    video.pause();
+  }
+</script>
