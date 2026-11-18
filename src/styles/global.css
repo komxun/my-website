@@ -368,6 +368,95 @@ p {
   margin-block: 0.5em 1.5em;
 }
 
+.prose .figure--wide {
+  width: min(var(--container-width), calc(100vw - 48px));
+  margin-left: calc(50% - min(var(--container-width), calc(100vw - 48px)) / 2);
+}
+
+.prose .figure--wide img {
+  width: 100%;
+  height: auto;
+}
+
+/* Interactive pan/zoom image (e.g. a mind-map): <div class="zoomable"> */
+.prose .zoomable {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  background: var(--color-surface);
+  cursor: grab;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.prose .zoomable.is-panning {
+  cursor: grabbing;
+}
+
+.prose .zoomable img {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin: 0;
+  border: 0;
+  border-radius: 0;
+  transform-origin: 0 0;
+  will-change: transform;
+  /* image handles its own panning; let the container catch the gestures */
+  pointer-events: none;
+}
+
+.prose .zoomable-controls {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  display: flex;
+  gap: 6px;
+  z-index: 2;
+}
+
+.prose .zoomable-controls button {
+  width: 32px;
+  height: 32px;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--color-border);
+  border-radius: 7px;
+  background: rgb(11 17 32 / 78%);
+  color: var(--color-text);
+  font-size: 1rem;
+  line-height: 1;
+  cursor: pointer;
+  backdrop-filter: blur(6px);
+  transition: var(--transition);
+}
+
+.prose .zoomable-controls button:hover {
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+}
+
+.prose .zoomable-hint {
+  position: absolute;
+  left: 10px;
+  bottom: 10px;
+  z-index: 2;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: rgb(11 17 32 / 70%);
+  color: var(--color-text-muted);
+  font-size: 0.7rem;
+  letter-spacing: 0.02em;
+  pointer-events: none;
+  transition: opacity var(--transition);
+}
+
+.prose .zoomable.is-zoomed .zoomable-hint {
+  opacity: 0;
+}
+
 .prose figcaption {
   margin-top: 0.75em;
   padding-inline: 2px;

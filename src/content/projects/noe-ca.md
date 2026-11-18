@@ -1,6 +1,6 @@
 ---
 title: "Integrated Terrain Following and Collision Avoidance in Unknown Environments"
-description: "A unified guidance scheme that lets a UAV hug the terrain at low altitude while avoiding unforeseen obstacles, from algorithm to simulation."
+description: "A unified guidance scheme that lets a UAV hug the terrain at low altitude while avoiding unforeseen obstacles."
 category: "UAV Autonomy"
 date: 2026-11-10
 status: "active"
@@ -36,6 +36,3 @@ modes, and the approach is validated in software-in-the-loop simulation.
 - Guaranteeing safe clearance from limited, noisy forward-looking sensing
 - Keeping guidance stable and real-time at low altitude and high speed
 
-## Results
-
-_Screenshots, trajectory plots and a short write-up to follow._

@@ -20,8 +20,9 @@ export const navigation = [
   { label: "About", href: "/about/" },
   { label: "Research", href: "/research/" },
   { label: "Projects", href: "/projects/" },
-  { label: "Software", href: "/software/" },
-  { label: "Knowledge", href: "/knowledge/" },
+  { label: "Implementations", href: "/implementations/" },
+  // Temporarily hidden — restore when Knowledge content is ready.
+  // { label: "Knowledge", href: "/knowledge/" },
   { label: "Videos", href: "/videos/" },
 ];
 

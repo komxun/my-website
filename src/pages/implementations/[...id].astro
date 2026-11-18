@@ -4,7 +4,7 @@ import EntryLayout from "../../components/EntryLayout.astro";
 import { formatDate } from "../../lib/format";
 
 export async function getStaticPaths() {
-  const entries = await getCollection("software", ({ data }) => !data.draft);
+  const entries = await getCollection("implementations", ({ data }) => !data.draft);
   return entries.map((entry) => ({
     params: { id: entry.id },
     props: { entry },
@@ -25,13 +25,13 @@ if (entry.data.docs) links.push({ label: "Documentation", href: entry.data.docs 
 <EntryLayout
   title={entry.data.title}
   description={entry.data.description}
-  eyebrow="Software"
+  eyebrow="Implementation"
   meta={meta}
   tags={entry.data.tags}
   links={links}
   cover={entry.data.cover}
-  backHref="/software/"
-  backLabel="All software"
+  backHref="/implementations/"
+  backLabel="All implementations"
 >
   <Content />
 </EntryLayout>

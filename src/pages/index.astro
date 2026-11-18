@@ -64,10 +64,10 @@ const projectItems: StripItem[] = pick(
 }));
 
 const softwareItems: StripItem[] = pick(
-  await getCollection("software", notDraft),
+  await getCollection("implementations", notDraft),
   8
 ).map((e) => ({
-  href: `/software/${e.id}/`,
+  href: `/implementations/${e.id}/`,
   title: e.data.title,
   eyebrow: e.data.language,
   meta: e.data.stars != null ? `★ ${e.data.stars}` : formatYear(e.data.date),
@@ -267,17 +267,17 @@ const videoItems: StripItem[] = pick(
   <!-- SOFTWARE -->
   {softwareItems.length > 0 && (
     <ContentStrip
-      label="04 / SOFTWARE"
-      title="Building, testing and shipping code."
+      label="04 / IMPLEMENTATIONS"
+      title="From theory to practice."
       description="Open-source implementations, algorithms and engineering tools."
-      viewAllHref="/software/"
-      viewAllLabel="All software"
+      viewAllHref="/implementations/"
+      viewAllLabel="All implementations"
       items={softwareItems}
     />
   )}
 
   <!-- KNOWLEDGE HUB -->
-  {knowledgeItems.length > 0 && (
+  <!-- {knowledgeItems.length > 0 && (
     <ContentStrip
       class="research-section"
       label="05 / KNOWLEDGE"
@@ -287,14 +287,14 @@ const videoItems: StripItem[] = pick(
       viewAllLabel="All articles"
       items={knowledgeItems}
     />
-  )}
+  )} -->
 
   <!-- VIDEOS -->
   {videoItems.length > 0 && (
     <ContentStrip
-      label="06 / VIDEOS"
-      title="Don't forget to have fun!"
-      description="A reminder that engineering is not just about solving problems — it's also about curiosity, and enjoying the process."
+      label="06 / SHOWCASE"
+      title="See the Systems. See the Results."
+      description="Selected demonstrations and highlights from my work."
       viewAllHref="/videos/"
       viewAllLabel="All videos"
       items={videoItems}
@@ -657,11 +657,34 @@ const videoItems: StripItem[] = pick(
 </style>
 
 <script>
-  // Respect reduced-motion: freeze the hero video on its poster frame.
-  const media = window.matchMedia("(prefers-reduced-motion: reduce)");
   const video = document.querySelector<HTMLVideoElement>(".hero-video");
-  if (video && media.matches) {
-    video.removeAttribute("autoplay");
-    video.pause();
+  if (video) {
+    const prefersReduced = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
+
+    if (prefersReduced) {
+      // Respect reduced-motion: freeze on the poster frame.
+      video.removeAttribute("autoplay");
+      video.pause();
+    } else {
+      // Force muted (Safari sometimes ignores the HTML attribute) and try to play.
+      video.muted = true;
+      video.playsInline = true;
+
+      const tryPlay = () => video.play().catch(() => {});
+      tryPlay();
+
+      // If the browser blocked autoplay (e.g. data-saver), start on first interaction.
+      const kick = () => {
+        tryPlay();
+        window.removeEventListener("touchstart", kick);
+        window.removeEventListener("scroll", kick);
+        window.removeEventListener("click", kick);
+      };
+      window.addEventListener("touchstart", kick, { passive: true, once: true });
+      window.addEventListener("scroll", kick, { passive: true, once: true });
+      window.addEventListener("click", kick, { once: true });
+    }
   }
 </script>

@@ -19,9 +19,7 @@ order: 2
 
 ## Overview
 
-This research investigates how large groups of autonomous aerial vehicles can
-coordinate without centralised control, drawing on principles from biological
-swarms and distributed optimisation.
+This research proposes a cooperative multi-agent path planning strategy that integrates DNDI-based leader–follower formation control with IFDS-based obstacle avoidance. The approach enables agents to navigate static and dynamic environments while maintaining safe separation, even without inter-agent communication.
 
 ## Key questions
 
@@ -31,8 +29,5 @@ swarms and distributed optimisation.
 
 ## Approach
 
-We combine consensus-based control with reinforcement learning to let agents
-adapt their local policies while preserving formal safety guarantees.
+We combine DNDI-based leader–follower formation control with IFDS-based obstacle avoidance to enable agents to navigate static and dynamic environments while maintaining safe separation, even without inter-agent communication.
 
-> Replace this text with your own research notes — this file lives at
-> `src/content/research/swarm-intelligence.md`.

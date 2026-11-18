@@ -6,7 +6,7 @@ import EntryCard from "../../components/EntryCard.astro";
 import EmptyState from "../../components/EmptyState.astro";
 import { byDateDesc } from "../../lib/format";
 
-const entries = (await getCollection("software", ({ data }) => !data.draft)).sort(
+const entries = (await getCollection("implementations", ({ data }) => !data.draft)).sort(
   byDateDesc
 );
 
@@ -19,13 +19,13 @@ function externalLinks(data: (typeof entries)[number]["data"]) {
 ---
 
 <Layout
-  title="Software | Komsun Tamanakijprasart"
-  description="Open-source software, algorithms and engineering tools — mostly backed by public GitHub repositories."
+  title="Implementations | Komsun Tamanakijprasart"
+  description="Implementations, software, algorithms and engineering tools — mostly backed by public GitHub repositories."
 >
   <PageHeader
-    label="Software"
-    title="Building, testing and shipping code."
-    description="Open-source implementations, algorithms and engineering tools. Each entry links straight to its GitHub repository."
+    label="Implementations"
+    title="From theory to practice."
+    description="Implementations, algorithms and engineering tools. Each entry links straight to its GitHub repository."
   />
 
   <section class="section">
@@ -35,7 +35,7 @@ function externalLinks(data: (typeof entries)[number]["data"]) {
           <div class="content-grid">
             {entries.map((entry) => (
               <EntryCard
-                href={`/software/${entry.id}/`}
+                href={`/implementations/${entry.id}/`}
                 eyebrow={entry.data.language}
                 title={entry.data.title}
                 description={entry.data.description}
@@ -50,7 +50,7 @@ function externalLinks(data: (typeof entries)[number]["data"]) {
             ))}
           </div>
         ) : (
-          <EmptyState message="Add a Markdown file to src/content/software/ (with a github URL) to feature a repository." />
+          <EmptyState message="Add a Markdown file to src/content/implementations/ (with a github URL) to feature a repository." />
         )
       }
     </div>

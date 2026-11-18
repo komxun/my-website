@@ -64,9 +64,9 @@ const projects = defineCollection({
   }),
 });
 
-/** Software / code — typically GitHub-backed. */
-const software = defineCollection({
-  loader: glob({ base: "./src/content/software", pattern: "**/*.{md,mdx}" }),
+/** Implementations — software / code, typically GitHub-backed. */
+const implementations = defineCollection({
+  loader: glob({ base: "./src/content/implementations", pattern: "**/*.{md,mdx}" }),
   schema: z.object({
     title: z.string(),
     description: z.string(),
@@ -118,4 +118,4 @@ const videos = defineCollection({
   }),
 });
 
-export const collections = { research, projects, software, knowledge, videos };
+export const collections = { research, projects, implementations, knowledge, videos };
